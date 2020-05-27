@@ -9,34 +9,21 @@ class TestGreeting(TestCase):
         expect = 'おはよう'
         self.assertEqual(expect, greeting.greeting(hour))
 
-    # 正常系(2) - 想定する入力値すべてをチェックする (bad case)
-    def test_greeting_2(self):
+    # 正常系(2) - 複数パラメータを一括テストする (good case)
+    def test_greeting_3(self):
+        # 境界条件（入力する値によって異なる挙動の仕様を持つ関数）として最小限と思われる入力のみ使用する
         test_data = [
             (0, 'こんばんは'),
-            (2, 'こんばんは'),
-            (3, 'こんばんは'),
             (4, 'こんばんは'),
             (5, 'おはよう'),
-            (6, 'おはよう'),
-            (7, 'おはよう'),
-            (8, 'おはよう'),
-            (9, 'おはよう'),
-            (10, 'おはよう'),
             (11, 'おはよう'),
             (12, 'こんにちは'),
-            (13, 'こんにちは'),
-            (14, 'こんにちは'),
-            (15, 'こんにちは'),
-            (16, 'こんにちは'),
             (17, 'こんにちは'),
             (18, 'こんばんは'),
-            (19, 'こんばんは'),
-            (20, 'こんばんは'),
-            (21, 'こんばんは'),
-            (22, 'こんばんは'),
             (23, 'こんばんは'),
         ]
         for hour, grt in test_data:
-            self.assertEqual(
-                grt,
-                greeting.greeting(hour))
+            # subTest よりも簡単で便利な仕組みとして pytests.parametrize などがある
+            #  参考: https://docs.pytest.org/en/latest/parametrize.html
+            with self.subTest(msg='subTest による Parameterize Test', hour=hour, grt=grt):
+                self.assertEqual(grt, greeting.greeting(hour))
